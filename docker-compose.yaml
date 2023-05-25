@@ -1,6 +1,6 @@
 version: "3.3"
 services:
-  db:
+  db_postgres:
     image: postgres:14
     ports:
       - 5432:5432
@@ -8,16 +8,29 @@ services:
       - ./postgres_data:/var/lib/postgresql/data
     env_file:
       - .env   
-  app_back:
+
+
+  db_mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+
+
+  app_backend:
     restart: on-failure
     build:
-      context: .
-      dockerfile: ./backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - 4000:4000
     volumes:
-      - .:/app/
+      - ./backend/:/app/
     command: npm run dev && npm install
     depends_on:
-      - db
-    
+      - db_postgres
+      -db_mongo 
