@@ -1,0 +1,21 @@
+
+
+OPERARIO:
+id operario - pk
+usuario  
+cc
+nombre
+apellido
+correo
+foto
+
+ADMINISTRADOR:
+id operario - pk
+usuario  
+cc
+nombre
+apellido
+correo
+foto
+
+

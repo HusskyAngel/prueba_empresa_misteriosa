@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const dotenv =require('dotenv');
 const path = require('path');
 
-const envPath = path.resolve(__dirname, '../../.env'); 
+const envPath = path.resolve(__dirname, '../../../.env'); 
 dotenv.config({ path: envPath });
 
 const dbUser =process.env.POSTGRES_USER;
@@ -22,4 +22,5 @@ async function testConnection(){
       console.error('Unable to connect to the database:', error);
     }
 }
-testConnection()
+
+module.export(sequelize);

@@ -17,9 +17,7 @@ services:
     volumes:
       - ./data:/data/db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=secret
-
+      - .env 
 
   app_backend:
     restart: on-failure
@@ -33,4 +31,4 @@ services:
     command: npm run dev && npm install
     depends_on:
       - db_postgres
-      -db_mongo 
+      - db_mongo 

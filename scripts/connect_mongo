@@ -1,0 +1,27 @@
+#!/bin/bash
+
+DOCKER_STATUS=$(systemctl status docker)
+
+if echo "$DOCKER_STATUS" | grep -q "Active: active (running)"; then 
+    echo "Docker is active"
+else
+    echo "Please activate Docker with sudo systemctl start docker" 
+    exit 1
+fi
+
+
+# MongoDB container information
+MONGO_CONTAINER_NAME="prueba_empresa_misteriosa-db_mongo-1"
+CONTAINER_STATUS=$(docker ps)
+MONGO_PORT=27017
+
+if echo "$CONTAINER_STATUS" | grep -q "$MONGO_CONTAINER_NAME"; then 
+    echo "Container is running\n" 
+    echo "Initializing " 
+else 
+    echo "Container is not running or ensure if the container has the name $CONTAINER_NAME"
+    exit 1
+fi
+
+# Connect to MongoDB container
+docker exec -it "$MONGO_CONTAINER_NAME" mongo --port "$MONGO_PORT"
