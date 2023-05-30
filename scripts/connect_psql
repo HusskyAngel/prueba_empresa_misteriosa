@@ -9,7 +9,7 @@ else
     exit 1
 fi
 
-CONTAINER_NAME="empresa_misteriosa"
+CONTAINER_NAME="prueba_empresa_misteriosa-db_postgres-1"
 CONTAINER_STATUS=$(docker ps) 
 
 if echo "$CONTAINER_STATUS" | grep -q "$CONTAINER_NAME"; then 
