@@ -8,7 +8,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 50vh;
+}
+.title-container{
+    color: "black";
+    fontWeight: "bold";
+    font: "40px sans-serif";
+    align-items: center;
+    width: 400px;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+     height: 10vh;
+
 }
 
 .form-field {
