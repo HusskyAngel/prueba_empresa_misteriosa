@@ -1,25 +1,9 @@
 import Router from 'express';
-import db from '../../db/dbmodels/db'
+import verifyUser from '../../controllers/authController'
 
 const router =Router();
 
 router.post('/login', (req,res)=>{
-   const {usuario,contrasena,tipo} =req.body; 
-    if (tipo =="oper"){
-        db.operario.findOne({where:{usuario:usuario, constrasena:contrasena},})
-            .then((usuario)=> {
-                
-            })
-            .catch((error)=>{
-
-            })
-    }else{
-        db.admin.findOne({where:{usuario:usuario, constrasena:contrasena},})
-            .then((usuario)=> {
-                
-            })
-            .catch((error)=>{
-
-            })
-    }
+    let usr= 
+    verifyUser(req,res);    
 });
