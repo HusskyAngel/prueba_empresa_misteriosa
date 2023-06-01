@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Stack from '@mui/material/Stack';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,6 +55,10 @@ function Administrador() {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+  const handleChangeInfo = (event, newValue) => {
+    setValue(3);
+  };
+
 
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
@@ -66,12 +71,22 @@ function Administrador() {
           textColor="inherit"
           aria-label="full width tabs example"
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Iventario" {...a11yProps(0)} />
+          <Tab label="Administrar Operarios" {...a11yProps(1)} />
+          <Tab label="Registrar Operarios" {...a11yProps(2)} />
         </Tabs>
-
-    <Avatar alt="Remy Sharp" src="https://upload.wikimedia.org/wikipedia/commons/8/85/Joss_Whedon_%2827970806483%29.jpg" />
+    <div style={{ marginLeft: 'auto' }}>
+      <Stack spacing={{ xs: 1, sm: 2 }} direction="row">
+        <Tabs 
+          style={{ marginLeft: 'auto' }}  
+          value={value}
+          onChange={handleChangeInfo}
+          indicatorColor="secondary"
+          textColor="inherit"
+          aria-label="full width tabs example">
+          <Tab label="..." {...a11yProps(3)} />
+        </Tabs><Avatar alt="Remy Sharp" src="https://upload.wikimedia.org/wikipedia/commons/8/85/Joss_Whedon_%2827970806483%29.jpg" /></Stack>
+  </div>
       </Toolbar>
       </AppBar>
       <SwipeableViews
@@ -80,7 +95,7 @@ function Administrador() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One
+          Item One1
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           Item Two
@@ -88,6 +103,10 @@ function Administrador() {
         <TabPanel value={value} index={2} dir={theme.direction}>
           Item Three
         </TabPanel>
+        <TabPanel value={value} index={3} dir={theme.direction}>
+          informacion
+        </TabPanel>
+
       </SwipeableViews>
     </Box>
   );

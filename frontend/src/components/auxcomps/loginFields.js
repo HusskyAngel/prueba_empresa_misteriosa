@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Field } from 'formik';
 import { TextField, Button,  Select } from '@material-ui/core';
 import * as Yup from 'yup';
+import Stack from '@mui/material/Stack';
 import '../css/login.css'; // Import the CSS file
 
 const validationSchema = Yup.object().shape({
@@ -22,7 +23,8 @@ const LoginFields = () => {
 
       {({ errors, touched }) => (
         <form className="form-container"> {/* Add the class name to the form container */}
-            <Field 
+        <Stack direction="column" spacing={2}>
+        <Field 
           name="type" 
           label="Tipo" 
           variant="outlined"
@@ -34,6 +36,7 @@ const LoginFields = () => {
             <option value="Operario">Operario</option>
             <option value="Administrador">Administrador</option>
           </Field>
+
           <Field
             as={TextField}
             name="email"
@@ -58,6 +61,7 @@ const LoginFields = () => {
           <Button type="submit" variant="contained" color="primary" className="submit-button">
             Login
           </Button>
+        </Stack>
         </form>
       )}
   </Formik>
