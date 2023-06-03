@@ -4,7 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
-import './dotenvConfig';
+import mapboxgl  from 'mapbox-gl';
+
+mapboxgl.accessToken=process.env.REACT_APP_MAP_KEY;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

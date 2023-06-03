@@ -10,8 +10,7 @@ import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Stack from '@mui/material/Stack';
-
-import OperMap from './auxcomps/operMap';
+import OperarioTable from './auxcomps/operarioTable'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -95,7 +94,7 @@ function Operario() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          oper
+          <OperarioTable/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           informacion
