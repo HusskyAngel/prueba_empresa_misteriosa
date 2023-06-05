@@ -10,8 +10,14 @@ import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Stack from '@mui/material/Stack';
-import OperarioTable from './auxcomps/operarioTable'
+import OperarioTable from './auxcomps/operarioTable';
+import OperarioInfo from './auxcomps/operarioInfo';
+import { Provider } from 'react-redux';
+import OperarioReducer from './reducers/operarioReducer';
+import {  createStore  } from 'redux';
 
+
+const operarioStore= createStore (OperarioReducer);
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -56,12 +62,10 @@ function Operario() {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
-  const handleChangeInfo = (event, newValue) => {
-    setValue(1);
-  };
 
 
   return (
+    <Provider store={operarioStore}>
     <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
       <AppBar position="static">
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -73,17 +77,17 @@ function Operario() {
           aria-label="full width tabs example"
         >
           <Tab label="Iventario" {...a11yProps(0)} />
+          <Tab label="..." {...a11yProps(1)} />
         </Tabs>
     <div style={{ marginLeft: 'auto' }}>
       <Stack spacing={{ xs: 1, sm: 2 }} direction="row">
         <Tabs 
           style={{ marginLeft: 'auto' }}  
           value={value}
-          onChange={handleChangeInfo}
+          onChange={handleChange}
           indicatorColor="secondary"
           textColor="inherit"
           aria-label="full width tabs example">
-          <Tab label="..." {...a11yProps(3)} />
         </Tabs><Avatar alt="Remy Sharp" src="https://upload.wikimedia.org/wikipedia/commons/8/85/Joss_Whedon_%2827970806483%29.jpg" /></Stack>
   </div>
       </Toolbar>
@@ -97,11 +101,12 @@ function Operario() {
           <OperarioTable/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          informacion
+          <OperarioInfo/> 
         </TabPanel>
 
       </SwipeableViews>
     </Box>
+    </Provider>
   );
 }
 

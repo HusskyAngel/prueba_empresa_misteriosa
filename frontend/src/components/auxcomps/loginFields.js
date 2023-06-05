@@ -1,70 +1,72 @@
-import React from 'react';
-import { Formik, Field } from 'formik';
-import { TextField, Button,  Select } from '@material-ui/core';
-import * as Yup from 'yup';
+
+import React, {useState,useEffect} from 'react';
+import { TextField, Button,  Select, MenuItem } from '@material-ui/core';
 import Stack from '@mui/material/Stack';
 import '../css/login.css'; // Import the CSS file
-
-const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string().required('Required'),
-  type: Yup.string().required('Required')
-});
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 
 const LoginFields = () => {
+    const [dataa,setData]=useState({})
+    const [redi,setRedi]=useState(false)
+    const [correo, setCorreo] = useState('');
+    const [contrasena, setContrasena] = useState('');
+    const [tipo, setTipo] = useState('oper');
+
+    const onSubmit=async ()=>{
+
+         const data = {
+             tipo:tipo,
+              correo:correo ,
+              contrasena:contrasena 
+         };
+        await axios.post(process.env.REACT_APP_BACK+"/login/login", data)
+          .then(response => {
+            window.aler("entro")
+            setRedi(true) 
+            setData(response)
+          })
+          .catch(error => {
+            window.alert('Correo o contraseña incorrecta' + error) 
+          });
+
+    }
+    if(redi){
+          if (tipo=="admin") {
+            return (<Navigate to={{ pathname: '/admin', state: { data:dataa  } }} />);
+          }else if(tipo=="oper"){
+            return <Navigate  to={{ pathname: '/oper', state: { data:dataa  } }} />;
+          }
+    }
   return (
-    <Formik
-      initialValues={{ email: '', password: '', type:'Operario'}}
-      validationSchema={validationSchema}
-      onSubmit={(values) => {
-        console.log(values);
-      }}
-    >
-
-      {({ errors, touched }) => (
-        <form className="form-container"> {/* Add the class name to the form container */}
+        <form className="form-container" onSubmit={onSubmit}> {/* Add the class name to the form container */}
         <Stack direction="column" spacing={2}>
-        <Field 
-          name="type" 
-          label="Tipo" 
-          variant="outlined"
-          className="form-field" 
-          fullWidth
-          as={Select}
-          error={touched.type && Boolean(errors.type)}
-          helperText={touched.type && errors.type}>
-            <option value="Operario">Operario</option>
-            <option value="Administrador">Administrador</option>
-          </Field>
-
-          <Field
-            as={TextField}
-            name="email"
-            label="Email"
-            variant="outlined"
-            fullWidth
-            className="form-field" 
-            error={touched.email && Boolean(errors.email)}
-            helperText={touched.email && errors.email}
+          <Select
+            value={tipo}
+            onChange={r =>setTipo(r.target.value) }
+          >
+            <MenuItem value="oper">Operador</MenuItem>
+            <MenuItem value="admin">Administrador</MenuItem>
+          </Select>
+        <TextField
+            name="correo"
+            value={correo}
+            label="Correo"
+            onChange={r =>setCorreo(r.target.value)}
           />
-          <Field
-            as={TextField}
-            name="password"
-            label="Password"
+          <TextField
+            name="contrasena"
+            value={contrasena}
+            label="Contrasena"
             type="password"
-            variant="outlined"
-            fullWidth
-            className="form-field" 
-            error={touched.password && Boolean(errors.password)}
-            helperText={touched.password && errors.password}
+            onChange={r=>setContrasena(r.target.value)}
           />
           <Button type="submit" variant="contained" color="primary" className="submit-button">
             Login
           </Button>
         </Stack>
         </form>
-      )}
-  </Formik>
   );
 };
 export default LoginFields;

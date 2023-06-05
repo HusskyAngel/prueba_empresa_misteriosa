@@ -25,10 +25,25 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - 4000:4000
+      - 3001:3001
     volumes:
       - ./backend/:/app/
-    command: npm run dev && npm install
+    command: npm instal && npm start
     depends_on:
       - db_postgres
       - db_mongo 
+
+  app_frontend:
+    restart: on-failure
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/:/app/
+    command: npm install && node app.js
+    depends_on:
+      - db_postgres
+      - db_mongo
+      - app_backend

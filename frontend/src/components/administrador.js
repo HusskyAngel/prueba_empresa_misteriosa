@@ -10,7 +10,15 @@ import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Stack from '@mui/material/Stack';
+import OperarioTable from './auxcomps/operarioTable';
+import AdminInfo from './auxcomps/adminInfo';
+import AdminOper from './auxcomps/adminOper';
+import AdminRegister from './auxcomps/adminRegister';
+import adminReducer from './reducers/adminReducer';
+import {  createStore  } from 'redux';
+import { Provider } from 'react-redux';
 
+const adminStore= createStore (adminReducer);
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -56,11 +64,12 @@ function Administrador() {
     setValue(index);
   };
   const handleChangeInfo = (event, newValue) => {
-    setValue(3);
+      setValue(3);
   };
 
 
   return (
+    <Provider store={adminStore}>
     <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
       <AppBar position="static">
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -72,19 +81,18 @@ function Administrador() {
           aria-label="full width tabs example"
         >
           <Tab label="Iventario" {...a11yProps(0)} />
-          <Tab label="Administrar Operarios" {...a11yProps(1)} />
-          <Tab label="Registrar Operarios" {...a11yProps(2)} />
+          <Tab label="Registrar Operarios" {...a11yProps(1)} />
+          <Tab label="..." {...a11yProps(2)} />
         </Tabs>
     <div style={{ marginLeft: 'auto' }}>
       <Stack spacing={{ xs: 1, sm: 2 }} direction="row">
-        <Tabs 
+          <Tabs 
+          onChange={handleChange}
           style={{ marginLeft: 'auto' }}  
           value={value}
-          onChange={handleChangeInfo}
           indicatorColor="secondary"
           textColor="inherit"
           aria-label="full width tabs example">
-          <Tab label="..." {...a11yProps(3)} />
         </Tabs><Avatar alt="Remy Sharp" src="https://upload.wikimedia.org/wikipedia/commons/8/85/Joss_Whedon_%2827970806483%29.jpg" /></Stack>
   </div>
       </Toolbar>
@@ -95,20 +103,18 @@ function Administrador() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One1
+          <OperarioTable/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
+          <AdminRegister/>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
-        </TabPanel>
-        <TabPanel value={value} index={3} dir={theme.direction}>
-          informacion
+          <AdminInfo/>
         </TabPanel>
 
       </SwipeableViews>
     </Box>
+    </Provider>
   );
 }
 

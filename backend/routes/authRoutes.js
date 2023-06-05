@@ -4,6 +4,6 @@ import {validateToken} from '../middleware/jwt.js';
 
 const loginRouter =Router();
 console.log(login)
-loginRouter.post('/login',validateToken,login);
+loginRouter.post('/login',login);
 
 export default loginRouter;

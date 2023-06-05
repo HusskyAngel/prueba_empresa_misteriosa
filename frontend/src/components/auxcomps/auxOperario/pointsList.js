@@ -3,11 +3,12 @@ import Typography from '@mui/material/Typography';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import Point from './point';
-
+import ScrollArea from "react-scrollbar";
+import { useSelector, useDispatch } from 'react-redux';
 
 
 export default function PointList() {
-const data=[{long:12 ,lat:213},{long:123 ,lat:12},{long:1231 ,lat:12},{long:13 ,lat:12} ];
+  const data=useSelector(state=> state.Points);
 
   return (
     <List
@@ -22,9 +23,13 @@ const data=[{long:12 ,lat:213},{long:123 ,lat:12},{long:1231 ,lat:12},{long:13 ,
         </ListSubheader>
       }
     >
+
+    <ScrollArea>
       {data.map((item,index)=>(
-        <Point lat={item.lat} long={item.long} place={"Cali"} imgp={"https://assets.bridgestonetire.com/content/dam/consumer/bst/la/co/tips/2022/tecnologia-de-llantas/deportivo.jpg"}/>
+        <Point Marker={item} />
       )) }
+
+    </ScrollArea>
     </List>
   );
 }

@@ -2,11 +2,13 @@ import bcrypt from 'bcrypt';
 
 
 function encrypt(password){
-    return bcrypt.hash(password, 10);
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    return hash;
 }
 
 function decrypt(password,hash){
-    return bcrypt.compare(password, hash);
+    return bcrypt.compareSync(password, hash);
 }
 
 export {encrypt,decrypt};
